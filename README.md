@@ -1,4 +1,4 @@
-# League of Legends Exploratory Data Analysis
+# League of Legends Modeling
 ### Creator: Ryan Hung
 ---
 ## Framing the Problem:

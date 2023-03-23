@@ -1,4 +1,4 @@
-# League of Legends Modeling - Predicting the vector before the end of the game
+# League of Legends Modeling - Predicting the victor before the end of the game
 ### Creator: Ryan Hung
 ---
 ## Framing the Problem:
@@ -67,6 +67,6 @@ We will be measuring the **accuracy** of our model on these two groups to determ
 
 Here is the result of our permutation test:
 
-<iframe src="assets/fairnesstest.html" width=800 height=600 frameBorder=0></iframe>
+<iframe src="assets/fairness=test.html" width=800 height=600 frameBorder=0></iframe>
 
 Our permutation test resulted in a p-value of **0.1733**, which is greater than our significance level of 0.01 so we **fail to reject the null hypothesis**. Thus, there is statistical evidence that implies our model is fair with respect to a team getting or not getting first baron - however, this is not an absolute conclusion.

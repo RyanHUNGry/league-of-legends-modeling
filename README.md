@@ -1,4 +1,4 @@
-# League of Legends Modeling
+# League of Legends Modeling - Predicting the vector before the end of the game
 ### Creator: Ryan Hung
 ---
 ## Framing the Problem:
@@ -10,9 +10,11 @@ The data used here has already been cleaned in the exploratory data analysis fou
 
 League of Legends is a highly complex game, and victory is typically determined through various factors. 
 
-This modeling notebook focuses on creating a **binary classifier** to predict whether or not a team will win or lose a game. We will be using the **response variable** `result`, which is a boolean column where `True` represents a win and `False` represents a loss. We are using `result` as our response variable because it directly relates to our problem of predicting whether or not a team will win.
+This modeling notebook focuses on creating a **binary classifier** to predict whether or not a team will win or lose a game before it has ended. We will be using the **response variable** `result`, which is a boolean column where `True` represents a win and `False` represents a loss. We are using `result` as our response variable because it directly relates to our problem of predicting whether or not a team will win.
 
 We will be utilizing **accuracy** over other metrics such as precision, recall, or F1 score because predicting a false positive or a false negative is equally bad in our case. Moreover, there is no class imbalance in our data. In other words, the proportion of teams that win is roughly equal to the proportion of teams that lose in our dataset. To better visualize this, we provide a plot of the class distribution in our training set:
+
+<iframe src="assets/class-distribution.html" width=800 height=600 frameBorder=0></iframe>
 
 Lastly, we need to specify what features are available at the **time of prediction**. In our model, we will be using the features `firstbaron`, `firstblood`, and other features captured at the 15-minute mark of a match. All of these features are available during the time of prediction because we have access to them before the game has finished. In other words, there is no information that is only available after the game has ended.
 
@@ -32,7 +34,7 @@ After fitting our model on the training set and then evaluating accuracy on the 
 ### Final Model:
 For our final model, we are adding two additional features to our original baseline model:
 1. We engineer the feature `kda_diff_at_15`, which is the difference between a team and their opponent's $KDA = \frac{kills + assists}{deaths + 1}$ at the 15-minute mark (we use smoothing to avoid division by zero). We then standardize to shrink the range to make our coefficients more interpretable when compared against other features. This feature is good with respect to the DGP because KDA is a measure of a team's performance against another team. Having a higher KDA - positive difference - than the other team means that you are eliminating them more than they are eliminating you, which is important in determining the winner.
-2. We standardize the feature `xpdiffat15`, which is the difference between experience gained betwen a team and its opponent. We standardize this feature because it is normally distributed and has a large range - about 15k. This shrinks the scale of `xpdiffat15` to make our model converge faster and makes our coefficients more understandable with respect to other features. Intuitively, this feature is good with respect to the data generating process because a team with more experience gained has access to higher levels that make their champions stronger. This is very important at the 15-minute mark because experience is a better resource at earlier stages of the game than gold - because gold income is slower during early stages.
+2. We standardize the feature `xpdiffat15`, which is the difference between experience gained betwen a team and its opponent. We standardize this feature because it is normally distributed and has a large range - about 15k. This shrinks the scale of `xpdiffat15` to make our model converge faster and makes our coefficients more understandable with respect to other features. Intuitively, this feature is good with respect to the DGP because a team with more experience gained has access to higher levels that make their champions stronger. This is very important at the 15-minute mark because experience is a better resource at earlier stages of the game than gold - because gold income is slower during early stages.
 
 We maintain using a **logistic regression model** so we can compare the difference in performance of engineering these features. In addition, logistic regression is solid for binary classification.
 

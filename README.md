@@ -45,9 +45,11 @@ For hyperparameter tuning, we used 10-fold grid search cross-validation to deter
 
 As a result of our cross-validation, **we select `liblinear` as our hyperparameter**.
 
-After putting our newly engineered features into a pipeline and specifying `liblinear`, we obtain a final accuracy of **0.831**. This is a slight improvement over our baseline model, and it might suggest that KDA and experience difference might not have strong correlations in deciding who wins or loses a match.
+After putting our newly engineered features into a pipeline and specifying `liblinear`, we obtain a final accuracy of **0.831**. This is only a minimal improvement over our baseline model, and it might suggest that 15-minute KDA and experience difference might not have strong correlations in deciding who wins or loses a match. Maybe later stages of the game are more impactful in winnter determination, but we would have to gather more data...
 
 Here is a normalized confusion matrix of our final model:
+
+<img src="assets/confusionmatrix.png" alt="Confusion matrix">
 
 ---
 ## Fairness Analysis:
@@ -65,5 +67,6 @@ We will be measuring the **accuracy** of our model on these two groups to determ
 
 Here is the result of our permutation test:
 
+<iframe src="assets/fairnesstest.html" width=800 height=600 frameBorder=0></iframe>
 
-Our permutation test resulted in a p-value of **0.242**, which is greater than our significance level of 0.01 so we **fail to reject the null hypothesis**. Thus, there is statistical evidence that implies our model is fair with respect to a team getting or not getting first baron - this is not an absolute conclusion.
+Our permutation test resulted in a p-value of **0.1733**, which is greater than our significance level of 0.01 so we **fail to reject the null hypothesis**. Thus, there is statistical evidence that implies our model is fair with respect to a team getting or not getting first baron - however, this is not an absolute conclusion.
